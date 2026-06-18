@@ -46,22 +46,28 @@ const Navbar = () => {
 
             {user && (
               <>
-                {/* User info */}
-                <div className="hidden sm:flex flex-col text-right">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {user.name || 'User'}
-                  </span>
-                  <span className="text-xs text-gray-400 dark:text-gray-500">
-                    {user.email}
-                  </span>
+                {/* User Profile */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-sm font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-800">
+                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <div className="hidden sm:flex flex-col">
+                    <span className="text-sm font-semibold text-slate-900 dark:text-white leading-tight">
+                      {user.name || 'User'}
+                    </span>
+                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                      {user.email}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Logout Button */}
                 <button
                   onClick={logout}
-                  className="flex items-center gap-2 rounded-lg bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-700 transition-all duration-200"
+                  className="flex h-10 w-10 sm:h-auto sm:w-auto items-center justify-center gap-2 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 sm:px-3.5 sm:py-2 sm:text-sm sm:font-semibold dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white transition-all duration-200"
+                  title="Logout"
                 >
-                  <FiLogOut className="h-4 w-4" />
+                  <FiLogOut className="h-5 w-5 sm:h-4 sm:w-4" />
                   <span className="hidden sm:inline">Logout</span>
                 </button>
               </>

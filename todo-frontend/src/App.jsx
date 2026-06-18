@@ -20,7 +20,7 @@ function App() {
 
         {/* App shell with sticky Navbar */}
         <Route path="/*" element={
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col transition-colors duration-200">
+            <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] dark:from-slate-950 dark:to-slate-900 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-200">
             <Navbar />
             <main className="flex-1">
               <Routes>

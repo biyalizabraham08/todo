@@ -23,5 +23,5 @@ body {
 }
 
 @utility glass-panel {
-  @apply bg-white border border-gray-100 shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] rounded-2xl dark:bg-gray-800 dark:border-gray-700;
+  @apply bg-white border border-slate-200 shadow-[0_10px_30px_rgba(0,0,0,0.04)] rounded-2xl dark:bg-slate-900 dark:border-slate-800 dark:shadow-[0_10px_30px_rgba(0,0,0,0.2)];
 }

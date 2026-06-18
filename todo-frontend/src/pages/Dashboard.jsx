@@ -32,6 +32,7 @@ const Dashboard = () => {
   const [editingTitle, setEditingTitle] = useState('');
   const [editingDueDate, setEditingDueDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showFilterCalendar, setShowFilterCalendar] = useState(false);
   const [filterDate, setFilterDate] = useState(null);
   const newTodoInputRef = useRef(null);
 
@@ -192,53 +193,51 @@ const Dashboard = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
 
-      {/* Analytics grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="glass-panel rounded-2xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tasks</p>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{totalTasks}</h3>
+      {/* Unified Analytics Banner */}
+      <div className="glass-panel rounded-[2rem] p-6 lg:p-8 mb-8 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden bg-white dark:bg-slate-900">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl"></div>
+        
+        {/* Left Side: Completion Rate */}
+        <div className="flex items-center gap-6 relative z-10 w-full md:w-auto">
+          <div className="relative w-24 h-24 shrink-0 drop-shadow-sm">
+             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+               <path className="text-slate-100 dark:text-slate-800" strokeWidth="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+               <motion.path className="text-brand-500" strokeWidth="3.5" strokeDasharray={`${completionRate}, 100`} strokeLinecap="round" stroke="currentColor" fill="none" initial={{ strokeDasharray: "0, 100" }} animate={{ strokeDasharray: `${completionRate}, 100` }} transition={{ duration: 1.5, ease: "easeOut" }} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+             </svg>
+             <div className="absolute inset-0 flex items-center justify-center">
+               <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter">{completionRate}%</span>
+             </div>
           </div>
-          <div className="h-10 w-10 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center">
-            <FiList className="h-5 w-5" />
+          <div>
+            <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-1">Your Progress</h2>
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Keep up the great work today!</p>
           </div>
         </div>
 
-        <div className="glass-panel rounded-2xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Completed</p>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{completedTasks}</h3>
+        {/* Right Side: Metrics */}
+        <div className="flex items-center justify-between w-full md:w-auto md:gap-12 relative z-10">
+          <div className="text-center">
+            <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Total</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{totalTasks}</p>
           </div>
-          <div className="h-10 w-10 bg-brand-500/10 text-brand-500 rounded-full flex items-center justify-center">
-            <FiCheckCircle className="h-5 w-5" />
+          <div className="h-10 w-px bg-slate-200 dark:bg-slate-800"></div>
+          <div className="text-center">
+            <p className="text-[11px] font-bold text-brand-500 dark:text-brand-400 uppercase tracking-widest mb-1">Completed</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{completedTasks}</p>
           </div>
-        </div>
-
-        <div className="glass-panel rounded-2xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Pending</p>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{pendingTasks}</h3>
-          </div>
-          <div className="h-10 w-10 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center">
-            <FiClock className="h-5 w-5" />
-          </div>
-        </div>
-
-        <div className="glass-panel rounded-2xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Completion Rate</p>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{completionRate}%</h3>
-          </div>
-          <div className="h-10 w-10 bg-purple-500/10 text-purple-500 rounded-full flex items-center justify-center">
-            <FiPercent className="h-5 w-5" />
+          <div className="h-10 w-px bg-slate-200 dark:bg-slate-800"></div>
+          <div className="text-center">
+            <p className="text-[11px] font-bold text-amber-500 dark:text-amber-400 uppercase tracking-widest mb-1">Pending</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{pendingTasks}</p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
         {/* Left column */}
-        <div className="lg:col-span-1 space-y-6">
+        <div className="lg:col-span-2 space-y-6">
 
           {/* Create task */}
           <div className="glass-panel rounded-2xl p-6 shadow-sm">
@@ -344,24 +343,70 @@ const Dashboard = () => {
             </div>
 
             <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white">Filter by Date</h4>
-              </div>
-              <CalendarPicker
-                selectedDate={filterDate}
-                onSelect={(d) => setFilterDate(d?.getTime() === filterDate?.getTime() ? null : d)}
-                todoDates={todoDates}
-                showTwoMonths={false}
-                labelPrefix="Filtering:"
-              />
+              <button
+                onClick={() => setShowFilterCalendar(v => !v)}
+                className={`flex w-full items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200 ${
+                  filterDate
+                    ? 'bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-400 border border-brand-200 dark:border-brand-500/30'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <FiCalendar className="h-4 w-4 shrink-0" />
+                  <span>
+                    {filterDate
+                      ? `Filtering: ${filterDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                      : '🗓️ Filter by Date'}
+                  </span>
+                </div>
+                {filterDate && (
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFilterDate(null);
+                    }}
+                    className="p-1 hover:bg-brand-100 dark:hover:bg-brand-500/20 rounded-md transition-colors"
+                  >
+                    <FiX className="h-4 w-4" />
+                  </span>
+                )}
+              </button>
+
+              <AnimatePresence>
+                {showFilterCalendar && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                    animate={{ opacity: 1, height: 'auto', marginTop: 12 }}
+                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <CalendarPicker
+                      selectedDate={filterDate}
+                      onSelect={(d) => {
+                        setFilterDate(d?.getTime() === filterDate?.getTime() ? null : d);
+                        if (d) setShowFilterCalendar(false); // Auto-collapse on selection
+                      }}
+                      todoDates={todoDates}
+                      showTwoMonths={false}
+                      labelPrefix="Filtering:"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
 
         {/* Right column: Task list */}
-        <div className="lg:col-span-2">
-          <div className="glass-panel rounded-2xl p-6 shadow-sm min-h-[400px]">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Tasks</h3>
+        <div className="lg:col-span-3">
+          <div className="glass-panel rounded-3xl p-6 lg:p-8 shadow-sm min-h-[500px]">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Your Tasks</h3>
+              <span className="bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 px-3 py-1 rounded-full text-xs font-bold">
+                {filteredTodos.length} {filteredTodos.length === 1 ? 'Task' : 'Tasks'}
+              </span>
+            </div>
 
             {loading ? (
               <div className="flex flex-col items-center justify-center h-[300px] gap-4">
@@ -442,18 +487,18 @@ const Dashboard = () => {
                             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                             className={`flex items-start justify-between gap-4 p-5 rounded-2xl transition-all duration-200 ${
                               todo.completed 
-                                ? 'bg-gray-50/30 opacity-60 dark:bg-gray-900/30' 
-                                : 'bg-white shadow-[0_2px_15px_-5px_rgba(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_4px_20px_-5px_rgba(0,0,0,0.06)] dark:bg-gray-800 dark:border-gray-700'
+                                ? 'bg-slate-50/50 opacity-75 dark:bg-slate-800/30' 
+                                : 'bg-white shadow-sm border border-slate-200 hover:shadow-md dark:bg-slate-900 dark:border-slate-800'
                             }`}
                           >
-                            <div className="flex items-start gap-3 flex-1 min-w-0">
+                            <div className="flex items-start gap-4 flex-1 min-w-0">
                               {/* Checkbox */}
                               <button
                                 onClick={() => handleToggleTodo(todo._id, todo.completed)}
                                 className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200 mt-0.5 ${
                                   todo.completed
                                     ? 'bg-brand-500 border-brand-500 text-white'
-                                    : 'border-gray-200 dark:border-gray-600 hover:border-brand-500 dark:hover:border-brand-400'
+                                    : 'border-slate-300 dark:border-slate-600 hover:border-brand-500 dark:hover:border-brand-400'
                                 }`}
                               >
                                 {todo.completed && <FiCheck className="h-4 w-4 stroke-[3]" />}
@@ -468,14 +513,21 @@ const Dashboard = () => {
                                     onChange={(e) => setEditingTitle(e.target.value)}
                                     onKeyDown={(e) => e.key === 'Enter' && handleUpdateTodo(todo._id)}
                                     autoFocus
-                                    className="block w-full rounded-lg border border-gray-300 bg-white/80 px-3 py-1.5 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white transition-all duration-200"
+                                    className="block w-full rounded-lg border border-slate-300 bg-white/80 px-3 py-1.5 text-sm text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white transition-all duration-200"
                                   />
                                 ) : (
-                                  <span className={`text-sm text-gray-800 dark:text-gray-200 truncate block ${
-                                    todo.completed ? 'line-through text-gray-400 dark:text-gray-500' : ''
-                                  }`}>
-                                    {todo.title}
-                                  </span>
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <span className={`text-[15px] font-semibold text-slate-900 dark:text-slate-100 truncate block ${
+                                      todo.completed ? 'line-through text-slate-400 dark:text-slate-500' : ''
+                                    }`}>
+                                      {todo.title}
+                                    </span>
+                                    {todo.completed && (
+                                      <span className="px-2 py-0.5 rounded-md bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400 text-[10px] font-bold uppercase tracking-widest">
+                                        Completed
+                                      </span>
+                                    )}
+                                  </div>
                                 )}
 
                                 {/* Due date badge */}
